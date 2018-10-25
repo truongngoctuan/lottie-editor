@@ -69,9 +69,12 @@ export default class extends Component {
                 selectedRow: row
               })
             }>
-            {color}
-            {showLayerNames && <br />}
-            {showLayerNames && rows[row].nm}
+            {rows[row].view.lvl === 1 && <div>`--</div>}
+            <div>
+              {color}
+              {showLayerNames && <br />}
+              {showLayerNames && rows[row].nm}
+            </div>
           </div>
         );
       }
@@ -246,6 +249,7 @@ export default class extends Component {
       snack,
       snackMessage
     } = this.state;
+    console.log(rows);
 
     const Animation = () =>
       json && (
@@ -452,7 +456,7 @@ const styles = {
   footer: { marginTop: 20 },
   footerItem: { color: colors.gray, display: 'flex' },
   header: { color: colors.primary, margin: 0, marginBottom: 17 },
-  landing: { alignItems: 'center', justifyContent: 'center' },
+  landing: { alignItems: 'center', justifyContent: 'left' },
   left: { marginRight: 40, width: 220 },
   link: { color: colors.primary, textDecoration: 'none' },
   popover: { position: 'absolute', zIndex: 1 },

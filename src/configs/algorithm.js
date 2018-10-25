@@ -1,12 +1,19 @@
-import { rgbToHex } from 'color-invert';
+import {
+  rgbToHex
+} from 'color-invert';
 
-import { fromUnitVector } from './utils';
+import {
+  fromUnitVector
+} from './utils';
 
 // main algorithm, it executes a callback on every color it finds
 const getColors = (tree: Object, cb: Function, asset: number = -1): void => {
   if (tree) {
     tree.forEach((layer, i) => {
       if (layer.shapes) {
+        console.log(layer);
+        cb(createLayerMeta(layer.nm));
+
         layer.shapes.forEach((shape, j) => {
           if (shape.it) {
             shape.it.forEach((prop, k) => {
@@ -30,7 +37,10 @@ const getColors = (tree: Object, cb: Function, asset: number = -1): void => {
                   a,
                   nm: prop.nm,
                   asset,
-                  color: rgbToHex(r, g, b)
+                  color: rgbToHex(r, g, b),
+                  view: {
+                    lvl: 1
+                  }
                 };
 
                 if (cb) {
@@ -44,5 +54,24 @@ const getColors = (tree: Object, cb: Function, asset: number = -1): void => {
     });
   }
 };
+
+function createLayerMeta(nm) {
+  const meta = {
+    i: 0,
+    j: 0,
+    k: 0,
+    r: 255,
+    g: 255,
+    b: 255,
+    a: 1,
+    nm: nm,
+    asset: null,
+    color: rgbToHex(255, 255, 255),
+    view: {
+      lvl: 0
+    }
+  };
+  return meta;
+}
 
 export default getColors;
